@@ -32,7 +32,7 @@ def image_dir_to_json(img_dir, img_type='jpg'):
 
 
 def predict(model, data_generator):
-    return model.predict_generator(data_generator, workers=2, use_multiprocessing=False, verbose=1)
+    return model.predict(data_generator, workers=2, use_multiprocessing=False, verbose=1)
 
 
 
