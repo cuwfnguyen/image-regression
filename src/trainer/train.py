@@ -3,11 +3,11 @@ import argparse
 from tensorflow.keras import backend as K
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
 from sklearn.model_selection import train_test_split
-from ..handlers.data_generator import TrainDataGenerator, TestDataGenerator
-from ..handlers.model_builder import Nima
-from ..handlers.samples_loader import load_samples
-from ..handlers.config_loader import load_config
-from ..utils.utils import ensure_dir_exists
+from handlers.data_generator import TrainDataGenerator, TestDataGenerator
+from handlers.model_builder import Nima
+from handlers.samples_loader import load_samples
+from handlers.config_loader import load_config
+from utils.utils import ensure_dir_exists
 
 
 def train(
