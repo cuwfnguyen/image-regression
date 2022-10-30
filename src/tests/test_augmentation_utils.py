@@ -1,7 +1,7 @@
 
 import unittest
 import numpy as np
-from src.utils import utils
+from ..utils import utils
 from unittest.mock import patch
 
 

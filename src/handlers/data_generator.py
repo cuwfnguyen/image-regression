@@ -2,7 +2,7 @@
 import os
 import numpy as np
 import tensorflow as tf
-from src.utils import utils
+from ..utils import utils
 
 
 class TrainDataGenerator(tf.keras.utils.Sequence):
