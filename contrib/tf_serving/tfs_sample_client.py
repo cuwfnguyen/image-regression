@@ -26,6 +26,7 @@ def get_image_quality_predictions(image_path, model_name):
     image = utils.load_image(image_path, target_size=(224, 224))
     image = keras.applications.mobilenet.preprocess_input(image)
 
+
     # Run through model
     target = f'{TFS_HOST}:{TFS_PORT}'
     channel = grpc.insecure_channel(target)
@@ -35,7 +36,7 @@ def get_image_quality_predictions(image_path, model_name):
     request.model_spec.signature_name = 'image_quality'
 
     request.inputs['input_image'].CopyFrom(
-        tf.contrib.util.make_tensor_proto(np.expand_dims(image, 0))
+        tf.make_tensor_proto(np.expand_dims(image, 0))
     )
 
     response = stub.Predict(request, 10.0)

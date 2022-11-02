@@ -20,7 +20,7 @@ def image_file_to_json(img_path):
     return img_dir, [{'image_id': img_id}]
 
 
-def image_dir_to_json(img_dir, img_type='jpg'):
+def image_dir_to_json(img_dir, img_type='png'):
     img_paths = glob.glob(os.path.join(img_dir, '*.'+img_type))
 
     samples = []
@@ -370,14 +370,17 @@ def load_config(config_file):
     config = load_json(config_file)
     return config
 
+def calc_mae(y_true, predictions):
+    y_true, predictions = np.array(y_true), np.array(predictions)
+    return np.mean(np.abs(y_true - predictions))
 
-def main(base_model_name, weights_file, image_source, predictions_file, img_format='jpg'):
+def main(base_model_name, weights_file, image_source, predictions_file, img_format='png'):
     # load samples
     if os.path.isfile(image_source):
         image_dir, samples = image_file_to_json(image_source)
     else:
         image_dir = image_source
-        samples = image_dir_to_json(image_dir, img_type='jpg')
+        samples = image_dir_to_json(image_dir, img_type='png')
 
     # build model and load weights
     nima = Nima(base_model_name, weights=None)
@@ -393,8 +396,13 @@ def main(base_model_name, weights_file, image_source, predictions_file, img_form
 
     # calc mean scores and add to samples
     for i, sample in enumerate(samples):
-        sample['mean_score_prediction'] = calc_mean_score(predictions[i])
+        sample['mean_score_prediction'] = calc_mean_score(predictions[i])*4/10
 
+        # tìm label được đánh nhãn trước để tính mae cho tập test
+        label = []
+        sample['score_true'] = calc_mean_score(label) * 4 / 10
+        sample['mae'] = calc_mae(sample['mean_score_prediction'], )
+        print(sample['image_id'])
     print(json.dumps(samples, indent=2))
 
     if predictions_file is not None:
